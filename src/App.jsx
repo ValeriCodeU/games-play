@@ -1,9 +1,11 @@
+import Header from "./components/header/Header"
 
 function App() {
 
   return (
     <>
-      <h1>Hello from React JS!</h1>
+     
+      <Header />
     </>
   )
 }
