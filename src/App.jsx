@@ -1,4 +1,6 @@
 import Header from "./components/header/Header"
+import HomePage from "./components/home/HomePage"
+import { Routes, Route } from "react-router-dom"
 
 function App() {
 
@@ -6,6 +8,10 @@ function App() {
     <>
      
       <Header />
+
+      <Routes >
+        <Route path="/"  element={<HomePage />}/>
+      </Routes>    
     </>
   )
 }
