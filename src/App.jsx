@@ -1,3 +1,4 @@
+import GameCreate from "./components/game-create/GameCreate"
 import GameList from "./components/game-list/GameList"
 import Header from "./components/header/Header"
 import HomePage from "./components/home/HomePage"
@@ -13,6 +14,7 @@ function App() {
       <Routes >
         <Route path="/" element={<HomePage />} />
         <Route path="/games" element={<GameList />} />
+        <Route path="/create" element={<GameCreate />} />
       </Routes>
     </>
   )
