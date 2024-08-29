@@ -12,7 +12,7 @@ export default function GameCreate() {
             summary
         } = Object.fromEntries(new FormData(e.currentTarget));
 
-        console.log(category);
+        console.log(category); 
     }
     return (
         <section id="create-page" className="auth">
