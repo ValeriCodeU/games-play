@@ -18,7 +18,7 @@ export default function GameCreate() {
         } = Object.fromEntries(new FormData(e.currentTarget));
 
         try {
-            await gameService.create({ title, category, summary });
+            await gameService.create({ title, imageUrl, maxLevel, category, summary });
             navigate('/games')
         } catch (error) {
             console.log(error);
