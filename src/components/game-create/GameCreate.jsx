@@ -1,7 +1,12 @@
+import * as gameService from "../../services/gameService";
+import { useNavigate } from "react-router-dom";
+
 export default function GameCreate() {
 
+    const navigate = useNavigate();
+
     //Uncontrolled form 
-    const createGameSubmitHandler = (e) => {
+    const createGameSubmitHandler = async (e) => {
         e.preventDefault();
 
         const {
@@ -12,7 +17,12 @@ export default function GameCreate() {
             summary
         } = Object.fromEntries(new FormData(e.currentTarget));
 
-        console.log(category); 
+        try {
+            await gameService.create({ title, category, summary });
+            navigate('/games')
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <section id="create-page" className="auth">
