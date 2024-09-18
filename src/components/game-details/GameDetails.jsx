@@ -30,6 +30,8 @@ export default function GameDetails() {
             formData.get('userName'),
             formData.get('comment')
         );
+
+        setComments(state => [...state, newComment]);
     }
 
     return (
@@ -50,22 +52,20 @@ export default function GameDetails() {
                     <h2>Comments:</h2>
                     <ul>
 
-                        {comments.map(c => (                        
-                            
+                        {comments.map(c => (
                             <li key={c._id} className="comment">
-                            <p>{c.userName}: {c.text}</p>
-                        </li>
-                        ))}                        
-                       
+                                <p>{c.userName}: {c.text}</p>
+                            </li>
+                        ))}
                     </ul>
 
-                    {comments.length === 0 &&  (<p className="no-comment">No comments.</p>)}                  
-                </div>            
+                    {comments.length === 0 && (<p className="no-comment">No comments.</p>)}
+                </div>
 
                 <div className="buttons">
                     <a href="#" className="button">Edit</a>
                     <a href="#" className="button">Delete</a>
-                </div> 
+                </div>
             </div>
 
             <article className="create-comment">
