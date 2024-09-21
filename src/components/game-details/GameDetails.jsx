@@ -6,7 +6,7 @@ import * as commentSerice from "../../services/commentService"
 
 
 export default function GameDetails() {
-    const [game, setGame] = useState({});
+    const [game, setGame] = useState({}); 
     const [comments, setComments] = useState([]);
     const { gameId } = useParams();
 
@@ -14,7 +14,7 @@ export default function GameDetails() {
         gameService.getOne(gameId)
             .then(g => setGame(g));
 
-        commentSerice.getAll()
+        commentSerice.getAll(gameId)
             .then(setComments);
     }, [gameId]);
 
