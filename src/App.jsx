@@ -15,39 +15,49 @@ import GameDetails from "./components/game-details/GameDetails"
 
 function App() {
 
-  //To be moved to a more appropriate place
-  const [auth, setAuth] = useState({});
-  const navigate = useNavigate();
+    //To be moved to a more appropriate place
+    const [auth, setAuth] = useState({});
+    const navigate = useNavigate();
 
-  const loginSubmitHandler = async values => {
-    console.log(values);
+    const loginSubmitHandler = async values => {
+        //console.log(values);
 
-    const response = await autService.login(values.email, values.password);
-    
-    console.log(response);
-    setAuth(response);
+        const response = await autService.login(values.email, values.password);
 
-    navigate(Path.Home);
+        //console.log(response);
+        setAuth(response);
 
-    
-  }
+        navigate(Path.Home);
+    }
 
-  return (
+    const registerSubmitHandler = async values => {
+        console.log(values);
+    }
 
-    <AuthContext.Provider value={{ loginSubmitHandler }}>
-      <>
-        <Header />
-        <Routes >
-          <Route path="/" element={<HomePage />} />
-          <Route path="/games" element={<GameList />} />
-          <Route path="/create" element={<GameCreate />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/games/:gameId" element={<GameDetails />} />
-        </Routes>
-      </>
-    </AuthContext.Provider>
-  )
+    const values = {
+        loginSubmitHandler,
+        registerSubmitHandler,
+        username: auth.username,
+        email: auth.email,
+        isAuthenticated: !!auth.username
+    }
+
+    return (
+
+        <AuthContext.Provider value={values}>
+            <>
+                <Header />
+                <Routes >
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/games" element={<GameList />} />
+                    <Route path="/create" element={<GameCreate />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/games/:gameId" element={<GameDetails />} />
+                </Routes>
+            </>
+        </AuthContext.Provider>
+    )
 }
 
 export default App
