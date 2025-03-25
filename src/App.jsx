@@ -10,6 +10,7 @@ import GameList from "./components/game-list/GameList"
 import Header from "./components/header/Header"
 import HomePage from "./components/home/HomePage"
 import Login from "./components/login/Login"
+import Logout from "./components/logout/Logout"
 import Register from "./components/register/Register"
 import GameDetails from "./components/game-details/GameDetails"
 
@@ -28,7 +29,7 @@ function App() {
         setAuth(response);
 
         navigate(Path.Home);
-    }
+    };
 
     const registerSubmitHandler = async values => {
         const result = await autService.register(values.email, values.password);
@@ -36,15 +37,21 @@ function App() {
         setAuth(result);
 
         navigate(Path.Home);
-    }
+    };
+
+    const logoutHandler = () => {
+        setAuth({});
+        navigate(Path.Home);
+    };
 
     const values = {
         loginSubmitHandler,
         registerSubmitHandler,
+        logoutHandler,
         username: auth.username || auth.email,
         email: auth.email,
         isAuthenticated: !!auth.email
-    }
+    };
 
     return (
 
@@ -58,6 +65,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/games/:gameId" element={<GameDetails />} />
+                    <Route path={Path.Logout} element={<Logout />} />
                 </Routes>
             </>
         </AuthContext.Provider>

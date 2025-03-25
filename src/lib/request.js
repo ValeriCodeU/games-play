@@ -17,7 +17,16 @@ const request = async (method, url, data) => {
         ...buildOptions(data)
     });
 
+    if (response.status === 204) {
+        return {};
+    }
+    
     const result = await response.json();
+
+    //for try catch 404 and other errors
+    if (!response.ok) {
+        throw result;
+    }
 
     return result;
 }
