@@ -41,7 +41,6 @@ function App() {
 
     const logoutHandler = () => {
         setAuth({});
-        navigate(Path.Home);
     };
 
     const values = {
