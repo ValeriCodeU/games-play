@@ -18,7 +18,7 @@ const Header = () => {
                 {isAuthenticated && (
                     <div id="user">
                         <Link to="/create">Create Game</Link>
-                        <Link href="/logout">Logout</Link>
+                        <Link to="/logout">Logout</Link>
                         <span>{username}</span>
                     </div>
                 )}
