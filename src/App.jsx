@@ -25,7 +25,7 @@ function App() {
 
         const response = await autService.login(values.email, values.password);
 
-        //console.log(response);
+        localStorage.setItem('accessToken', response.accessToken);
         setAuth(response);
 
         navigate(Path.Home);
@@ -36,11 +36,14 @@ function App() {
 
         setAuth(result);
 
+        localStorage.setItem('accessToken', result.accessToken);        
+
         navigate(Path.Home);
     };
 
     const logoutHandler = () => {
         setAuth({});
+        localStorage.removeItem('accessToken');
     };
 
     const values = {
