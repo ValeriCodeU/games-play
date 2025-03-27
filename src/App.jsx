@@ -17,13 +17,19 @@ import GameDetails from "./components/game-details/GameDetails"
 function App() {
 
     //To be moved to a more appropriate place
-    const [auth, setAuth] = useState({});
+    const [auth, setAuth] = useState(()=> {
+        localStorage.removeItem('accessToken');
+
+        return {};
+    });
     const navigate = useNavigate();
 
     const loginSubmitHandler = async values => {
         //console.log(values);
 
         const response = await autService.login(values.email, values.password);
+
+        console.log(response.accessToken);
 
         localStorage.setItem('accessToken', response.accessToken);
         setAuth(response);
