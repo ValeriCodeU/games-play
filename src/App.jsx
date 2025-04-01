@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Routes, Route, useNavigate } from "react-router-dom"
 
-import AuthContext from "./contexts/AuthContext"
+import { AuthProvider } from "./contexts/AuthContext"
 import * as autService from './services/authService'
 import Path from "../paths"
 
@@ -17,7 +17,7 @@ import GameDetails from "./components/game-details/GameDetails"
 function App() {
 
     //To be moved to a more appropriate place
-    const [auth, setAuth] = useState(()=> {
+    const [auth, setAuth] = useState(() => {
         localStorage.removeItem('accessToken');
 
         return {};
@@ -42,7 +42,7 @@ function App() {
 
         setAuth(result);
 
-        localStorage.setItem('accessToken', result.accessToken);        
+        localStorage.setItem('accessToken', result.accessToken);
 
         navigate(Path.Home);
     };
@@ -63,7 +63,7 @@ function App() {
 
     return (
 
-        <AuthContext.Provider value={values}>
+        <AuthProvider value={values}>
             <>
                 <Header />
                 <Routes >
@@ -76,7 +76,7 @@ function App() {
                     <Route path={Path.Logout} element={<Logout />} />
                 </Routes>
             </>
-        </AuthContext.Provider>
+        </AuthProvider>
     )
 }
 
