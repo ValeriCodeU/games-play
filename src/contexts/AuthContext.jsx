@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as autService from '../services/authService'
+import Path from "../../paths"
 
 
 const AuthContext = createContext();
@@ -47,7 +48,7 @@ export const AuthProvider = ({children}) => {
         registerSubmitHandler,
         logoutHandler,
         username: auth.username || auth.email,
-        email: auth.email,
+        email: auth.email, 
         isAuthenticated: !!auth.email
     };
 
