@@ -19,8 +19,8 @@ export default function Register() {
     })
 
     return (
-        <section id="register-page" onSubmit={onSubmit} className="content auth">
-            <form id="register">
+        <section id="register-page" className="content auth">
+            <form id="register" onSubmit={onSubmit}>
                 <div className="container">
                     <div className="brand-logo"></div>
                     <h1>Register</h1>

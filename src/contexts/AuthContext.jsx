@@ -4,10 +4,11 @@ import * as autService from '../services/authService'
 import Path from "../../paths"
 
 
-const AuthContext = createContext();
+   const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {    
-    
+export const AuthProvider = ({ children }) => {
+
+
     const [auth, setAuth] = useState(() => {
         localStorage.removeItem('accessToken');
 
@@ -48,7 +49,7 @@ export const AuthProvider = ({children}) => {
         registerSubmitHandler,
         logoutHandler,
         username: auth.username || auth.email,
-        email: auth.email, 
+        email: auth.email,
         isAuthenticated: !!auth.email
     };
 
