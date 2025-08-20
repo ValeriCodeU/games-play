@@ -32,7 +32,7 @@ export default function Register() {
                         name="email"
                         placeholder="maria@email.com"
                         onChange={onChange}
-                        values={values[RegisterFormKeys.Email]} />
+                        value={values[RegisterFormKeys.Email]} />
 
                     <label htmlFor="pass">Password:</label>
                     <input
@@ -40,7 +40,7 @@ export default function Register() {
                         name="password"
                         id="register-password"
                         onChange={onChange}
-                        values={values[RegisterFormKeys.Password]} />
+                        value={values[RegisterFormKeys.Password]} />
 
                     <label htmlFor="con-pass">Confirm Password:</label>
                     <input
@@ -48,7 +48,7 @@ export default function Register() {
                         name="confirm-password"
                         id="confirm-password"
                         onChange={onChange}
-                        values={values[RegisterFormKeys.ConfirmPassword]} />
+                        value={values[RegisterFormKeys.ConfirmPassword]} />
 
                     <input className="btn submit" type="submit" value="Register" />
 

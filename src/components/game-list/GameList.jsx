@@ -1,14 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import * as gameService from '../../services/gameService'
 import GameListItem from "./game-list-item/GameListItem";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
 
 export default function GameList() {
-    const [games, setGames] = useState([]); 
+    const [games, setGames] = useState([]);
+    const navigate = useNavigate();
+       const {
+            isAuthenticated,
+          
+        } = useContext(AuthContext);
+     
+     
      
     useEffect(() => {
         gameService.getAll()
-        .then(games => setGames(games));
-
+        .then(games => setGames(games))
+        .catch(err => {
+            console.log(err);
+            if(isAuthenticated){
+                navigate('/create');
+            }
+           
+        })
     }, []) ;
 
     console.log(games);

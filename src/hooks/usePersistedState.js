@@ -14,13 +14,24 @@ export default function usePersistedState(key, defaultValue) {
     });
 
     const setPersistedState = (value) => {
+ 
+        const newValue = typeof value === 'function' ? value(state) : value;
+ 
+        setState(newValue);
+        localStorage.setItem(key, JSON.stringify(newValue));
 
-        setState(value);
+        //lecturer version:
+        // setState(value);
 
-        const serializedValue = JSON.stringify(value);
+        // let serializedValue;
 
-        localStorage.setItem(key, serializedValue);
+        // if (typeof (value) === 'function') {
+        //     serializedValue = JSON.stringify(value(state));
+        // } else {
+        //     serializedValue = JSON.stringify(state);
+        // }
 
+        // localStorage.setItem(key, serializedValue);
     };
 
     return [
