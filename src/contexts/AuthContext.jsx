@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as autService from '../services/authService'
 import Path from "../../paths"

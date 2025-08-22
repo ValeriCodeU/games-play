@@ -1,15 +1,25 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useReducer } from "react";
 import { useParams } from "react-router-dom";
 import * as gameService from "../../services/gameService"
 import * as commentSerice from "../../services/commentService"
 import AuthContext from "../../contexts/AuthContext";
 
-
+const reducer = (state, action) => {
+    switch (action?.type) {
+        case 'GET_ALL_COMMENTS':
+            return [...action.payload]
+        case 'ADD_COMMENT':
+            return [...state, action.payload];
+        default:
+            return state;
+    }
+}
 
 export default function GameDetails() {
     const { email } = useContext(AuthContext);
     const [game, setGame] = useState({});
-    const [comments, setComments] = useState([]);
+    // const [comments, setComments] = useState([]); version without reducer
+    const [comments, dispatch] = useReducer(reducer, []);
     const { gameId } = useParams();
 
     useEffect(() => {
@@ -18,10 +28,15 @@ export default function GameDetails() {
 
         commentSerice.getAll(gameId)
             .then(comments => {
-                console.log(comments);               
-                setComments(comments);
+                console.log(comments);
+
+                dispatch({
+                    type: "GET_ALL_COMMENTS",
+                    payload: comments
+                });
+                // setComments(comments);
             });
-    }, [gameId]);   
+    }, [gameId]);
 
     const addCommentHandler = async (e) => {
         e.preventDefault();
@@ -33,7 +48,12 @@ export default function GameDetails() {
             formData.get('comment')
         );
 
-        setComments(state => [...state, { ...newComment, ownerData: { email } }]);
+        // setComments(state => [...state, { ...newComment, ownerData: { email } }]);
+        newComment.ownerData = { email };
+        dispatch({
+            type: 'ADD_COMMENT',
+            payload: newComment
+        });
 
         console.log(comments);
     }
