@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export default function useForm(submitHandler, intialValues) {
+export default function useForm(submitHandler, initialValues) {
 
-    const [values, setValues] = useState(intialValues);
+    const [values, setValues] = useState(initialValues);
 
     const onChange = (e) => {
         setValues(state => ({
@@ -17,9 +17,13 @@ export default function useForm(submitHandler, intialValues) {
         submitHandler(values);
     }
 
+    //add reset function for add comment form
+    const resetForm = () => setValues(initialValues);
+
     return {
         values,
         onChange,
-        onSubmit
+        onSubmit,
+        resetForm
     }
 }

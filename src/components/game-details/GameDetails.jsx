@@ -3,7 +3,17 @@ import { useParams } from "react-router-dom";
 import * as gameService from "../../services/gameService"
 import * as commentSerice from "../../services/commentService"
 import AuthContext from "../../contexts/AuthContext";
+import useForm from "../../hooks/useForm";
 
+
+const CommentFormKeys = {
+    Comment: 'comment',
+}
+
+// Reducer for managing comments state in GameDetails.
+// Currently kept local to the component.
+// If it grows with more actions (EDIT, DELETE, loading, error, etc.)
+// => consider moving it into a separate file (e.g. reducers/commentsReducer.js).
 const reducer = (state, action) => {
     switch (action?.type) {
         case 'GET_ALL_COMMENTS':
@@ -20,7 +30,7 @@ export default function GameDetails() {
     const [game, setGame] = useState({});
     // const [comments, setComments] = useState([]); version without reducer
     const [comments, dispatch] = useReducer(reducer, []);
-    const { gameId } = useParams();
+    const { gameId } = useParams();   
 
     useEffect(() => {
         gameService.getOne(gameId)
@@ -38,14 +48,15 @@ export default function GameDetails() {
             });
     }, [gameId]);
 
-    const addCommentHandler = async (e) => {
-        e.preventDefault();
+    const addCommentHandler = async () => {
+        // e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
+        // const formData = new FormData(e.currentTarget);
 
         const newComment = await commentSerice.create(
             gameId,
-            formData.get('comment')
+            // formData.get('comment')
+            values.comment
         );
 
         // setComments(state => [...state, { ...newComment, ownerData: { email } }]);
@@ -56,7 +67,13 @@ export default function GameDetails() {
         });
 
         console.log(comments);
+
+         resetForm(); 
     }
+
+     const { values, onChange, onSubmit, resetForm } = useForm(addCommentHandler, {
+        [CommentFormKeys.Comment]: ''
+    });
 
     return (
         <section id="game-details">
@@ -94,9 +111,9 @@ export default function GameDetails() {
 
             <article className="create-comment">
                 <label>Add new comment:</label>
-                <form className="form" onSubmit={addCommentHandler}>
+                <form className="form" onSubmit={onSubmit}>
                     {/* <input type="text" name="userName" placeholder="User Name"></input> */}
-                    <textarea name="comment" placeholder="Comment......"></textarea>
+                    <textarea name={[CommentFormKeys.Comment]} value={values[CommentFormKeys.Comment]} onChange={onChange} placeholder="Comment......"></textarea>
                     <input className="btn submit" type="submit" value="Add Comment" />
                 </form>
             </article>
