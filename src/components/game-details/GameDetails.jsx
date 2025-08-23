@@ -26,11 +26,11 @@ const reducer = (state, action) => {
 }
 
 export default function GameDetails() {
-    const { email } = useContext(AuthContext);
+    const { email, userId } = useContext(AuthContext);
     const [game, setGame] = useState({});
     // const [comments, setComments] = useState([]); version without reducer
     const [comments, dispatch] = useReducer(reducer, []);
-    const { gameId } = useParams();   
+    const { gameId } = useParams();
 
     useEffect(() => {
         gameService.getOne(gameId)
@@ -68,12 +68,14 @@ export default function GameDetails() {
 
         console.log(comments);
 
-         resetForm(); 
+        resetForm();
     }
 
-     const { values, onChange, onSubmit, resetForm } = useForm(addCommentHandler, {
+    const { values, onChange, onSubmit, resetForm } = useForm(addCommentHandler, {
         [CommentFormKeys.Comment]: ''
     });
+
+    const isOwner = userId === game._ownerId;
 
     return (
         <section id="game-details">
@@ -102,11 +104,13 @@ export default function GameDetails() {
 
                     {comments.length === 0 && (<p className="no-comment">No comments.</p>)}
                 </div>
+                {isOwner && (
+                    <div className="buttons">
+                        <a href="#" className="button">Edit</a>
+                        <a href="#" className="button">Delete</a>
+                    </div>
+                )}
 
-                <div className="buttons">
-                    <a href="#" className="button">Edit</a>
-                    <a href="#" className="button">Delete</a>
-                </div>
             </div>
 
             <article className="create-comment">

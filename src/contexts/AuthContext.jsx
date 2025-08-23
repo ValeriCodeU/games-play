@@ -24,6 +24,8 @@ export const AuthProvider = ({ children }) => {
 
         const response = await autService.login(values.email, values.password);
 
+        console.log(response);
+
         console.log(response.accessToken);
 
         localStorage.setItem('accessToken', response.accessToken);
@@ -51,6 +53,7 @@ export const AuthProvider = ({ children }) => {
         loginSubmitHandler,
         registerSubmitHandler,
         logoutHandler,
+        userId: auth._id,
         username: auth.username || auth.email,
         email: auth.email,
         isAuthenticated: !!auth.email
