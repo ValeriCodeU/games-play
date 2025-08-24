@@ -1,9 +1,12 @@
-import { useState, useEffect, useContext, useReducer } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext, useReducer, useMemo } from "react";
+import { Link, useParams } from "react-router-dom";
 import * as gameService from "../../services/gameService"
 import * as commentSerice from "../../services/commentService"
 import AuthContext from "../../contexts/AuthContext";
 import useForm from "../../hooks/useForm";
+import { buildUrlPath } from "../../utils/pathUtils";
+import Path from "../../../paths";
+
 
 
 const CommentFormKeys = {
@@ -71,9 +74,15 @@ export default function GameDetails() {
         resetForm();
     }
 
-    const { values, onChange, onSubmit, resetForm } = useForm(addCommentHandler, {
+    //TODO: temp solution for form reinitialization
+    const initialCommentValues = useMemo(() => ({
         [CommentFormKeys.Comment]: ''
-    });
+    }), []);
+
+    // const { values, onChange, onSubmit, resetForm } = useForm(addCommentHandler, {
+    //     [CommentFormKeys.Comment]: ''
+    // });
+    const { values, onChange, onSubmit, resetForm } = useForm(addCommentHandler, initialCommentValues);
 
     const isOwner = userId === game._ownerId;
 
@@ -106,8 +115,9 @@ export default function GameDetails() {
                 </div>
                 {isOwner && (
                     <div className="buttons">
-                        <a href="#" className="button">Edit</a>
-                        <a href="#" className="button">Delete</a>
+                        {/* <Link to={`/games/${gameId}/edit`} className="button">Edit</Link> */}
+                        <Link to={buildUrlPath(Path.GameEdit, { gameId })} className="button">Edit</Link>
+                        <Link to={`/games/:gameId/delete`} className="button">Delete</Link>
                     </div>
                 )}
 
@@ -117,7 +127,7 @@ export default function GameDetails() {
                 <label>Add new comment:</label>
                 <form className="form" onSubmit={onSubmit}>
                     {/* <input type="text" name="userName" placeholder="User Name"></input> */}
-                    <textarea name={[CommentFormKeys.Comment]} value={values[CommentFormKeys.Comment]} onChange={onChange} placeholder="Comment......"></textarea>
+                    <textarea name={CommentFormKeys.Comment} value={values[CommentFormKeys.Comment]} onChange={onChange} placeholder="Comment......"></textarea>
                     <input className="btn submit" type="submit" value="Add Comment" />
                 </form>
             </article>
