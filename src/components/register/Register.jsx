@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import useForm from "../../hooks/useForm";
 
@@ -12,11 +12,24 @@ export default function Register() {
 
 
     const { registerSubmitHandler } = useContext(AuthContext);
-    const { values, onChange, onSubmit } = useForm(registerSubmitHandler, {
-        [RegisterFormKeys.Email]: '',
-        [RegisterFormKeys.Password]: '',
-        [RegisterFormKeys.ConfirmPassword]: '',
-    })
+
+    //TODO: temp solution for form reinitialization
+    const initialRegisterValues = useMemo(() => ({
+        [RegisterFormKeys.Email]: "",
+        [RegisterFormKeys.Password]: "",
+        [RegisterFormKeys.ConfirmPassword]: "",
+    }), []);
+
+
+
+    // const { values, onChange, onSubmit } = useForm(registerSubmitHandler, {
+    //     [RegisterFormKeys.Email]: '',
+    //     [RegisterFormKeys.Password]: '',
+    //     [RegisterFormKeys.ConfirmPassword]: '',
+    // })
+
+    const { values, onChange, onSubmit } = useForm(registerSubmitHandler, initialRegisterValues);
+
 
     return (
         <section id="register-page" className="content auth">

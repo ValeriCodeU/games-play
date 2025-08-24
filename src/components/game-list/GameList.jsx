@@ -24,7 +24,7 @@ export default function GameList() {
             }
            
         })
-    }, []) ;
+    }, []);
 
     console.log(games);
 

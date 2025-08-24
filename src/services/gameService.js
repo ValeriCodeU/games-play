@@ -31,3 +31,9 @@ export const create = async (gameData) => {
         console.log(error);
     }
 }
+
+export const update = async (gameId, gameData) => {
+      const result = await request.put(`${baseUrl}/${gameId}`, gameData);
+
+      return result;
+}
