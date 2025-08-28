@@ -84,9 +84,9 @@ export default function GameDetails() {
     // });
     const { values, onChange, onSubmit, resetForm } = useForm(addCommentHandler, initialCommentValues);
 
-    if (Math.random() < 0.5) {
-        throw new Error('Random error for testing ErrorBoundary');
-    }
+    // if (Math.random() < 0.5) {
+    //     throw new Error('Random error for testing ErrorBoundary');
+    // }
 
 
     const isOwner = userId === game._ownerId;
