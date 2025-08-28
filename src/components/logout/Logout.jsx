@@ -9,14 +9,31 @@ export default function Logout() {
     const navigate = useNavigate();
     const { logoutHandler } = useContext(AuthContext);
 
+    // useEffect(() => {
+    //     authService.logout()
+    //         .then(() => {
+    //             logoutHandler();
+    //             navigate(Path.Home);
+    //         })
+    //         .catch(() => {
+    //             logoutHandler();
+    //             navigate(Path.Home)
+    //         });
+    // }, []); 
+
     useEffect(() => {
+        let cancelled = false;
+
         authService.logout()
-            .then(() => {
-                logoutHandler();
-                navigate(Path.Home);
-            })
-            .catch(() => navigate(Path.Home));
-    }, []); 
-    
+            .catch((err) => console.warn('Logout failed:', err))
+                .finally(() => {
+                    if (cancelled) return;
+                    logoutHandler();
+                    navigate(Path.Home, { replace: true });
+                });
+
+        return () => { cancelled = true; };
+    }, []);
+
     return null;
 }
