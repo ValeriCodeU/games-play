@@ -37,3 +37,9 @@ export const update = async (gameId, gameData) => {
 
       return result;
 }
+
+export const deleteGame = async (gameId) => {
+    const result = await request.remove(`${baseUrl}/${gameId}`);
+
+    return result;
+}

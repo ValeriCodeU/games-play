@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useReducer, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import * as gameService from "../../services/gameService"
 import * as commentSerice from "../../services/commentService"
 import AuthContext from "../../contexts/AuthContext";
@@ -74,6 +74,14 @@ export default function GameDetails() {
         resetForm();
     }
 
+    const navigate = useNavigate();
+
+    const deleteButtonClickHandler = async () => {
+        if (confirm(`Are you sure you want to delete this game ${game.title}?`)) {
+            await gameService.deleteGame(gameId);
+            navigate('/games');
+        }
+    }
     //TODO: temp solution for form reinitialization
     const initialCommentValues = useMemo(() => ({
         [CommentFormKeys.Comment]: ''
@@ -119,10 +127,11 @@ export default function GameDetails() {
                     {comments.length === 0 && (<p className="no-comment">No comments.</p>)}
                 </div>
                 {isOwner && (
-                    <div className="buttons">
+                    <div className="buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
                         {/* <Link to={`/games/${gameId}/edit`} className="button">Edit</Link> */}
                         <Link to={buildUrlPath(Path.GameEdit, { gameId })} className="button">Edit</Link>
-                        <Link to={`/games/:gameId/delete`} className="button">Delete</Link>
+                        {/* <Link to={`/games/:gameId/delete`} className="button">Delete</Link> */}
+                        <button className="button" onClick={deleteButtonClickHandler} style={{ borderRadius: "0",  cursor: 'pointer'}}>Delete</button>
                     </div>
                 )}
 
