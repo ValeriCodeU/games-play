@@ -74,6 +74,7 @@ export default function GameDetails() {
         resetForm();
     }
 
+
     const navigate = useNavigate();
 
     const deleteButtonClickHandler = async () => {

@@ -31,7 +31,7 @@ function App() {
                             <Route path="/create" element={<GameCreate />} />
                             <Route path={Path.GameEdit} element={<GameEdit />} />
                             <Route path={Path.Logout} element={<Logout />} />
-                            <Route path="/games/:gameId" element={<GameDetails />} />
+                            <Route path={Path.GameDetails} element={<GameDetails />} />
                         </Route>
                     </Routes>
                 </>

@@ -36,9 +36,7 @@ export default function GameEdit() {
         }
     }
 
-    const { values, onChange, onSubmit } = useForm(updateGameSubmitHandler, game);
-
-    if (!game) return <div>Loading…</div>;
+    const { values, onChange, onSubmit } = useForm(updateGameSubmitHandler, game);    
 
     return (
         <section id="create-page" className="auth">

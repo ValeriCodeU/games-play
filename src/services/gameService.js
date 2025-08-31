@@ -33,13 +33,25 @@ export const create = async (gameData) => {
 }
 
 export const update = async (gameId, gameData) => {
-      const result = await request.put(`${baseUrl}/${gameId}`, gameData);
+    const result = await request.put(`${baseUrl}/${gameId}`, gameData);
 
-      return result;
+    return result;
 }
 
 export const deleteGame = async (gameId) => {
     const result = await request.remove(`${baseUrl}/${gameId}`);
+
+    return result;
+}
+
+export const getLatest = async () => {
+    const query = new URLSearchParams({
+        sortBy: '_createdOn desc',
+        offset: 0,        // от кой елемент да започне
+        pageSize: 3       // колко елемента да върне
+    });
+
+    const result = await request.get(`${baseUrl}?${query}`);
 
     return result;
 }
